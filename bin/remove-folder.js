@@ -30,15 +30,17 @@ inquirer
  * @param {string} baseDir
  * @param {{fullPath: string; name: string}[]} out
  */
-function read_each(baseDir, out) {
+function read_each(baseDir, out, firstTime = true) {
   const files = fs.readdirSync(baseDir);
   files.forEach((name) => {
     const fullPath = path.join(baseDir, name);
     const stats = fs.statSync(fullPath);
     if (stats.isDirectory()) {
-      read_each(fullPath, out);
+      read_each(fullPath, out, false);
     } else {
-      out.push({ fullPath, name });
+      if (firstTime === false) {
+        out.push({ fullPath, name });
+      }
     }
   });
 }
