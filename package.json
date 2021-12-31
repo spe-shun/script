@@ -1,0 +1,30 @@
+{
+  "name": "script",
+  "version": "1.0.0",
+  "description": "一些浏览器插件",
+  "main": "index.js",
+  "bin": {
+    "script": "remove-folder.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spe-shun/script.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/spe-shun/script/issues"
+  },
+  "homepage": "https://github.com/spe-shun/script#readme",
+  "dependencies": {
+    "commander": "^8.3.0",
+    "inquirer": "^8.2.0"
+  },
+  "devDependencies": {
+    "@types/inquirer": "^8.1.3",
+    "@types/node": "^17.0.5"
+  }
+}
