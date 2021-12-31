@@ -54,7 +54,7 @@ function moving(baseDir, list) {
   const errorFile = [];
   list.forEach((item) => {
     try {
-      execSync(`mv ${item.fullPath} ${baseDir}/${item.name}`);
+      execSync(`mv '${item.fullPath}' '${baseDir}/${item.name}'`);
     } catch (error) {
       errorFile.push(item.fullPath);
     }
