@@ -1,0 +1,53 @@
+#!/usr/bin/env node
+
+const { SourceMapConsumer } = require('source-map')
+const axios = require('axios')
+const { program } = require('commander')
+const fs = require('fs')
+
+const urlReg = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/
+
+program
+    .requiredOption('-m, --map <string>', 'sourcemap file')
+    .requiredOption('-l, --line <number>', 'line', Number)
+    .requiredOption('-c, --column <number>', 'column', Number)
+
+program.parse(process.argv)
+
+const options = program.opts()
+
+const { map, line, column } = options
+
+if (isNaN(line) || isNaN(column)) {
+    throw new Error('line or column must be number')
+}
+
+console.log(options)
+
+if (urlReg.test(map)) {
+    axios.get(map).then((res) => {
+        const sourceMap = res.data
+        run(sourceMap, line, column)
+    })
+} else {
+    // TODO 仅支持绝对路径 =。= 不想写了
+    const buffer = fs.readFileSync(map)
+    const sourceMap = JSON.parse(buffer.toString())
+    run(sourceMap, line, column)
+}
+
+/** 验证反解是否成功 */
+async function run(sourcemap, line, column) {
+    if (!sourcemap) {
+        throw new Error('no such sourcemap file')
+    }
+
+    await SourceMapConsumer.with(sourcemap, null, (consumer) => {
+        const res = consumer.originalPositionFor({
+            line,
+            column,
+        })
+
+        console.log(res)
+    })
+}

@@ -20,8 +20,10 @@
   },
   "homepage": "https://github.com/spe-shun/script#readme",
   "dependencies": {
+    "axios": "^0.26.0",
     "commander": "^8.3.0",
-    "inquirer": "^8.2.0"
+    "inquirer": "^8.2.0",
+    "source-map": "^0.7.3"
   },
   "devDependencies": {
     "@types/inquirer": "^8.1.3",
